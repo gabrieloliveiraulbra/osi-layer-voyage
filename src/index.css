@@ -119,7 +119,7 @@
   }
   
   .data-envelope {
-    @apply rounded-lg border-2 border-primary/30 bg-gradient-to-r from-accent/20 to-success/20;
+    @apply rounded-lg border-2 border-primary/30 bg-gradient-to-r from-accent/20 to-accent/10;
     box-shadow: var(--shadow-data);
     transition: var(--transition-smooth);
   }
