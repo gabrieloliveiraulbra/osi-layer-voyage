@@ -109,43 +109,70 @@ function generateDataUnit(layerId: number, message: string, scenario: string, di
     7: {
       sdu: message,
       pdu: `HTTP Request: ${message}`,
-      campos: ['Host: example.com', 'User-Agent: Browser', 'Content-Type: text/html'],
+      campos: [
+        'Host: Endereço do servidor de destino',
+        'User-Agent: Identificação do navegador usado',
+        'Content-Type: Tipo de conteúdo sendo enviado'
+      ],
       envelope: 'HTTP'
     },
     6: {
       sdu: `HTTP Request: ${message}`,
       pdu: `[UTF-8][ZIP][AES-256] HTTP Request: ${message}`,
-      campos: ['Encoding: UTF-8', 'Compression: ZIP', 'Encryption: AES-256'],
+      campos: [
+        'Encoding UTF-8: Codificação de caracteres padrão',
+        'Compression ZIP: Compressão para reduzir tamanho',
+        'Encryption AES-256: Criptografia para segurança'
+      ],
       envelope: 'SSL/TLS'
     },
     5: {
       sdu: `[UTF-8][ZIP][AES-256] HTTP Request: ${message}`,
       pdu: `[Session] [UTF-8][ZIP][AES-256] HTTP Request: ${message}`,
-      campos: ['Session ID: 12345', 'Keep-Alive: 300s'],
+      campos: [
+        'Session ID: Identificador único da sessão ativa',
+        'Keep-Alive: Tempo para manter conexão aberta'
+      ],
       envelope: 'Session'
     },
     4: {
       sdu: `[Session] [UTF-8][ZIP][AES-256] HTTP Request: ${message}`,
       pdu: `[TCP] [Session] [UTF-8][ZIP][AES-256] HTTP Request: ${message}`,
-      campos: ['Src Port: 5050', 'Dst Port: 443', 'Seq: 001', 'ACK: 0'],
+      campos: [
+        'Porta de Origem: Porta do seu computador (5050)',
+        'Porta de Destino: Porta do servidor (443 - HTTPS)',
+        'Número de Sequência: Ordem dos dados enviados',
+        'ACK: Confirmação de recebimento dos dados'
+      ],
       envelope: 'TCP'
     },
     3: {
       sdu: `[TCP] [Session] [UTF-8][ZIP][AES-256] HTTP Request: ${message}`,
       pdu: `[IP] [TCP] [Session] [UTF-8][ZIP][AES-256] HTTP Request: ${message}`,
-      campos: ['Src IP: 192.168.1.100', 'Dst IP: 8.8.8.8', 'TTL: 64'],
+      campos: [
+        'IP de Origem: Endereço do seu computador (192.168.1.100)',
+        'IP de Destino: Endereço do servidor Google (8.8.8.8)',
+        'TTL: Tempo de vida do pacote na rede (64 saltos)'
+      ],
       envelope: 'IP'
     },
     2: {
       sdu: `[IP] [TCP] [Session] [UTF-8][ZIP][AES-256] HTTP Request: ${message}`,
       pdu: `[Ethernet] [IP] [TCP] [Session] [UTF-8][ZIP][AES-256] HTTP Request: ${message}`,
-      campos: ['Src MAC: AA:BB:CC:DD:EE:FF', 'Dst MAC: 11:22:33:44:55:66'],
+      campos: [
+        'MAC de Origem: Endereço físico da sua placa de rede',
+        'MAC de Destino: Endereço físico do roteador/switch'
+      ],
       envelope: 'Ethernet'
     },
     1: {
       sdu: `[Ethernet] [IP] [TCP] [Session] [UTF-8][ZIP][AES-256] HTTP Request: ${message}`,
       pdu: `10110101011010101... (Sinais Elétricos)`,
-      campos: ['Frequency: 2.4GHz', 'Signal: +/-5V', 'Bits/sec: 1Gbps'],
+      campos: [
+        'Frequência: Velocidade de transmissão (2.4GHz)',
+        'Voltagem: Sinais elétricos (+/-5V) para bits 0 e 1',
+        'Taxa de Bits: Velocidade de dados (1Gbps)'
+      ],
       envelope: 'Physical'
     }
   };
