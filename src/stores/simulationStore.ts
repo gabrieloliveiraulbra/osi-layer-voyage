@@ -11,6 +11,7 @@ interface SimulationState {
   isAutoMode: boolean;
   speed: number;
   showEmailInterface: boolean;
+  showProfessorInterface: boolean;
   
   // Actions
   setMessage: (message: string) => void;
@@ -25,6 +26,8 @@ interface SimulationState {
   generateSteps: (message: string, scenario: string) => SimulationStep[];
   sendEmail: () => void;
   resetToEmailInterface: () => void;
+  showProfessorReceiving: () => void;
+  continueFromProfessor: () => void;
 }
 
 export const useSimulationStore = create<SimulationState>((set, get) => ({
@@ -37,6 +40,7 @@ export const useSimulationStore = create<SimulationState>((set, get) => ({
   isAutoMode: false,
   speed: 2000,
   showEmailInterface: true,
+  showProfessorInterface: false,
 
   setMessage: (message) => set({ message }),
   
@@ -57,6 +61,9 @@ export const useSimulationStore = create<SimulationState>((set, get) => ({
     const { currentStep, steps } = get();
     if (currentStep < steps.length - 1) {
       set({ currentStep: currentStep + 1 });
+    } else {
+      // Quando a simulação termina, mostrar tela da professora
+      get().showProfessorReceiving();
     }
   },
 
@@ -74,7 +81,7 @@ export const useSimulationStore = create<SimulationState>((set, get) => ({
   }),
 
   sendEmail: () => {
-    const emailContent = 'E-mail';
+    const emailContent = 'e-mail';
     set({ 
       message: emailContent,
       showEmailInterface: false 
@@ -84,8 +91,23 @@ export const useSimulationStore = create<SimulationState>((set, get) => ({
 
   resetToEmailInterface: () => set({
     showEmailInterface: true,
+    showProfessorInterface: false,
     steps: [],
     currentStep: 0,
+    isPlaying: false
+  }),
+
+  showProfessorReceiving: () => set({
+    showProfessorInterface: true,
+    isPlaying: false
+  }),
+
+  continueFromProfessor: () => set({
+    showProfessorInterface: false,
+    showEmailInterface: true,
+    steps: [],
+    currentStep: 0,
+    message: '',
     isPlaying: false
   }),
 

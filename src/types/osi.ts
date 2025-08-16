@@ -81,12 +81,6 @@ export const OSI_LAYERS: OSILayer[] = [
 
 export const SCENARIOS: Scenario[] = [
   {
-    id: "download",
-    nome: "Download Seguro",
-    descricao: "Download de arquivo via HTTPS",
-    exemploMensagem: "GET /arquivo.pdf HTTP/1.1"
-  },
-  {
     id: "email",
     nome: "E-mail Seguro", 
     descricao: "Envio de e-mail criptografado",

@@ -9,6 +9,7 @@ import { OSI_LAYERS, SCENARIOS } from '@/types/osi';
 import LayerVisualization from './LayerVisualization';
 import DataFlowPanel from './DataFlowPanel';
 import EmailInterface from './EmailInterface';
+import ProfessorInterface from './ProfessorInterface';
 
 const OSISimulator = () => {
   const {
@@ -20,6 +21,7 @@ const OSISimulator = () => {
     isAutoMode,
     speed,
     showEmailInterface,
+    showProfessorInterface,
     setMessage,
     setScenario,
     startSimulation,
@@ -30,7 +32,8 @@ const OSISimulator = () => {
     toggleAutoMode,
     setSpeed,
     sendEmail,
-    resetToEmailInterface
+    resetToEmailInterface,
+    continueFromProfessor
   } = useSimulationStore();
 
   const [inputMessage, setInputMessage] = useState('GET /arquivo.pdf HTTP/1.1');
@@ -63,6 +66,10 @@ const OSISimulator = () => {
     return <EmailInterface onSendEmail={sendEmail} />;
   }
 
+  if (showProfessorInterface) {
+    return <ProfessorInterface onContinue={continueFromProfessor} />;
+  }
+
   return (
     <div className="min-h-screen bg-background p-6">
       {/* Header */}
@@ -78,20 +85,7 @@ const OSISimulator = () => {
           </CardHeader>
           <CardContent className="space-y-4">
             {/* Controls */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Select value={scenario} onValueChange={setScenario}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Escolha um cenário" />
-                </SelectTrigger>
-                <SelectContent>
-                  {SCENARIOS.map((s) => (
-                    <SelectItem key={s.id} value={s.id}>
-                      {s.nome} - {s.descricao}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Input
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
