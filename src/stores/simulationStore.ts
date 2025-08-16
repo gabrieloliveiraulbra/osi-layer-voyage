@@ -10,6 +10,7 @@ interface SimulationState {
   isPlaying: boolean;
   isAutoMode: boolean;
   speed: number;
+  showEmailInterface: boolean;
   
   // Actions
   setMessage: (message: string) => void;
@@ -22,6 +23,8 @@ interface SimulationState {
   toggleAutoMode: () => void;
   setSpeed: (speed: number) => void;
   generateSteps: (message: string, scenario: string) => SimulationStep[];
+  sendEmail: () => void;
+  resetToEmailInterface: () => void;
 }
 
 export const useSimulationStore = create<SimulationState>((set, get) => ({
@@ -29,10 +32,11 @@ export const useSimulationStore = create<SimulationState>((set, get) => ({
   direction: 'encapsulamento',
   steps: [],
   message: '',
-  scenario: 'download',
+  scenario: 'email',
   isPlaying: false,
   isAutoMode: false,
   speed: 2000,
+  showEmailInterface: true,
 
   setMessage: (message) => set({ message }),
   
@@ -67,6 +71,22 @@ export const useSimulationStore = create<SimulationState>((set, get) => ({
     currentStep: 0, 
     direction: 'encapsulamento',
     isPlaying: false 
+  }),
+
+  sendEmail: () => {
+    const emailContent = 'E-mail: rafael@escola.com → andreia@escola.com | Assunto: Atividade 4 – Lógica de Programação | Anexo: atividade4.py';
+    set({ 
+      message: emailContent,
+      showEmailInterface: false 
+    });
+    get().startSimulation();
+  },
+
+  resetToEmailInterface: () => set({
+    showEmailInterface: true,
+    steps: [],
+    currentStep: 0,
+    isPlaying: false
   }),
 
   togglePlay: () => set((state) => ({ isPlaying: !state.isPlaying })),

@@ -4,10 +4,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Play, Pause, SkipForward, SkipBack, RotateCcw, Settings } from 'lucide-react';
+import { Play, Pause, SkipForward, SkipBack, RotateCcw, Settings, ArrowLeft } from 'lucide-react';
 import { OSI_LAYERS, SCENARIOS } from '@/types/osi';
 import LayerVisualization from './LayerVisualization';
 import DataFlowPanel from './DataFlowPanel';
+import EmailInterface from './EmailInterface';
 
 const OSISimulator = () => {
   const {
@@ -18,6 +19,7 @@ const OSISimulator = () => {
     isPlaying,
     isAutoMode,
     speed,
+    showEmailInterface,
     setMessage,
     setScenario,
     startSimulation,
@@ -26,7 +28,9 @@ const OSISimulator = () => {
     reset,
     togglePlay,
     toggleAutoMode,
-    setSpeed
+    setSpeed,
+    sendEmail,
+    resetToEmailInterface
   } = useSimulationStore();
 
   const [inputMessage, setInputMessage] = useState('GET /arquivo.pdf HTTP/1.1');
@@ -53,6 +57,11 @@ const OSISimulator = () => {
 
   const currentStepData = steps[currentStep];
   const currentLayer = OSI_LAYERS.find(layer => layer.id === currentStepData?.camada);
+
+  // Show email interface first
+  if (showEmailInterface) {
+    return <EmailInterface onSendEmail={sendEmail} />;
+  }
 
   return (
     <div className="min-h-screen bg-background p-6">
@@ -97,41 +106,51 @@ const OSISimulator = () => {
 
             {/* Playback Controls */}
             {steps.length > 0 && (
-              <div className="flex items-center justify-center gap-4">
-                <Button variant="outline" size="icon" onClick={prevStep} disabled={currentStep === 0}>
-                  <SkipBack className="h-4 w-4" />
-                </Button>
+              <div className="flex flex-col gap-4">
+                {/* Back to Email Button */}
+                <div className="flex justify-center">
+                  <Button variant="outline" onClick={resetToEmailInterface} className="gap-2">
+                    <ArrowLeft className="h-4 w-4" />
+                    Voltar para E-mail
+                  </Button>
+                </div>
                 
-                <Button variant="outline" size="icon" onClick={isPlaying ? togglePlay : togglePlay}>
-                  {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-                </Button>
-                
-                <Button variant="outline" size="icon" onClick={nextStep} disabled={currentStep >= steps.length - 1}>
-                  <SkipForward className="h-4 w-4" />
-                </Button>
-                
-                <Button variant="outline" size="icon" onClick={reset}>
-                  <RotateCcw className="h-4 w-4" />
-                </Button>
-                
-                <Button 
-                  variant={isAutoMode ? "default" : "outline"} 
-                  size="sm" 
-                  onClick={toggleAutoMode}
-                >
-                  Auto Mode
-                </Button>
-                
-                <Select value={speed.toString()} onValueChange={(value) => setSpeed(parseInt(value))}>
-                  <SelectTrigger className="w-32">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="1000">Rápido</SelectItem>
-                    <SelectItem value="2000">Normal</SelectItem>
-                    <SelectItem value="3000">Lento</SelectItem>
-                  </SelectContent>
-                </Select>
+                <div className="flex items-center justify-center gap-4">
+                  <Button variant="outline" size="icon" onClick={prevStep} disabled={currentStep === 0}>
+                    <SkipBack className="h-4 w-4" />
+                  </Button>
+                  
+                  <Button variant="outline" size="icon" onClick={isPlaying ? togglePlay : togglePlay}>
+                    {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+                  </Button>
+                  
+                  <Button variant="outline" size="icon" onClick={nextStep} disabled={currentStep >= steps.length - 1}>
+                    <SkipForward className="h-4 w-4" />
+                  </Button>
+                  
+                  <Button variant="outline" size="icon" onClick={reset}>
+                    <RotateCcw className="h-4 w-4" />
+                  </Button>
+                  
+                  <Button 
+                    variant={isAutoMode ? "default" : "outline"} 
+                    size="sm" 
+                    onClick={toggleAutoMode}
+                  >
+                    Auto Mode
+                  </Button>
+                  
+                  <Select value={speed.toString()} onValueChange={(value) => setSpeed(parseInt(value))}>
+                    <SelectTrigger className="w-32">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1000">Rápido</SelectItem>
+                      <SelectItem value="2000">Normal</SelectItem>
+                      <SelectItem value="3000">Lento</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
             )}
           </CardContent>
