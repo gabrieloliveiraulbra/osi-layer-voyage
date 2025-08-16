@@ -2,57 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Design System - Simulador OSI Interativo */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core Colors - Tech/Network Theme */
+    --background: 220 25% 8%;
+    --foreground: 210 40% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 220 20% 12%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 220 20% 12%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Brand Colors - Network Blue Theme */
+    --primary: 200 95% 60%;
+    --primary-foreground: 220 25% 8%;
+    --primary-glow: 200 100% 75%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 220 15% 20%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 220 15% 16%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 160 80% 50%;
+    --accent-foreground: 220 25% 8%;
 
-    --destructive: 0 84.2% 60.2%;
+    /* Status Colors */
+    --success: 142 76% 36%;
+    --success-foreground: 210 40% 98%;
+    
+    --warning: 38 92% 50%;
+    --warning-foreground: 220 25% 8%;
+
+    --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* UI Elements */
+    --border: 220 15% 25%;
+    --input: 220 15% 18%;
+    --ring: 200 95% 60%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Gradients - Network Theme */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-data: linear-gradient(90deg, hsl(var(--accent)), hsl(var(--success)));
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--card)), hsl(var(--muted)));
+    
+    /* Shadows - Glowing Effects */
+    --shadow-glow: 0 0 30px hsl(var(--primary) / 0.3);
+    --shadow-data: 0 0 20px hsl(var(--accent) / 0.4);
+    --shadow-layer: 0 4px 20px hsl(var(--background) / 0.5);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 
   .dark {
@@ -101,5 +108,56 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  /* OSI Layer Animation Classes */
+  .layer-pulse {
+    @apply animate-pulse;
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .data-envelope {
+    @apply rounded-lg border-2 border-primary/30 bg-gradient-to-r from-accent/20 to-success/20;
+    box-shadow: var(--shadow-data);
+    transition: var(--transition-smooth);
+  }
+  
+  .data-envelope.active {
+    @apply border-primary scale-105;
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .layer-card {
+    @apply bg-card border border-border rounded-xl p-6;
+    background: var(--gradient-subtle);
+    box-shadow: var(--shadow-layer);
+    transition: var(--transition-smooth);
+  }
+  
+  .layer-card.active {
+    @apply border-primary;
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .control-button {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-3 rounded-lg font-medium;
+    background: var(--gradient-primary);
+    transition: var(--transition-bounce);
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .control-button:hover {
+    @apply scale-105;
+  }
+  
+  .data-flow {
+    @apply flex items-center gap-4 text-sm font-mono;
+  }
+  
+  .flow-arrow {
+    @apply text-accent text-2xl;
+    animation: pulse 2s infinite;
   }
 }
