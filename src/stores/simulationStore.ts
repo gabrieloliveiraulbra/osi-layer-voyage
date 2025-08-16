@@ -74,7 +74,7 @@ export const useSimulationStore = create<SimulationState>((set, get) => ({
   }),
 
   sendEmail: () => {
-    const emailContent = 'E-mail: rafael@escola.com → andreia@escola.com | Assunto: Atividade 4 – Lógica de Programação | Anexo: atividade4.py';
+    const emailContent = 'E-mail';
     set({ 
       message: emailContent,
       showEmailInterface: false 
