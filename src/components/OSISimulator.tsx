@@ -36,7 +36,7 @@ const OSISimulator = () => {
     continueFromProfessor
   } = useSimulationStore();
 
-  const [inputMessage, setInputMessage] = useState('GET /arquivo.pdf HTTP/1.1');
+  const [inputMessage, setInputMessage] = useState('');
 
   // Auto-play logic
   useEffect(() => {
@@ -84,19 +84,7 @@ const OSISimulator = () => {
             </p>
           </CardHeader>
           <CardContent className="space-y-4">
-            {/* Controls */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Input
-                value={inputMessage}
-                onChange={(e) => setInputMessage(e.target.value)}
-                placeholder="Digite sua mensagem..."
-                className="font-mono"
-              />
-              
-              <Button onClick={handleStart} className="control-button">
-                Iniciar Simulação
-              </Button>
-            </div>
+            {/* Controls - Hidden since we only use email flow */}
 
             {/* Playback Controls */}
             {steps.length > 0 && (

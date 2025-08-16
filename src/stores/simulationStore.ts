@@ -81,7 +81,7 @@ export const useSimulationStore = create<SimulationState>((set, get) => ({
   }),
 
   sendEmail: () => {
-    const emailContent = 'e-mail';
+    const emailContent = 'E-mail';
     set({ 
       message: emailContent,
       showEmailInterface: false 
