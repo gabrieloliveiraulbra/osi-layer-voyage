@@ -108,7 +108,7 @@ function generateDataUnit(layerId: number, message: string, scenario: string, di
   const examples = {
     7: {
       sdu: message,
-      pdu: `Host: example.com | User-Agent: Mozilla/5.0 | Content-Type: text/html | Body: ${message}`,
+      pdu: `HTTP Request: ${message}`,
       campos: [
         'Host: Endereço do servidor de destino',
         'User-Agent: Identificação do navegador usado',
@@ -117,8 +117,8 @@ function generateDataUnit(layerId: number, message: string, scenario: string, di
       envelope: 'HTTP'
     },
     6: {
-      sdu: `Host: example.com | User-Agent: Mozilla/5.0 | Content-Type: text/html | Body: ${message}`,
-      pdu: `[UTF-8][ZIP][AES-256] Host: example.com | User-Agent: Mozilla/5.0 | Content-Type: text/html | Body: ${message}`,
+      sdu: `HTTP Request: ${message}`,
+      pdu: `[UTF-8][ZIP][AES-256] HTTP Request: ${message}`,
       campos: [
         'Encoding UTF-8: Codificação de caracteres padrão',
         'Compression ZIP: Compressão para reduzir tamanho',
@@ -127,8 +127,8 @@ function generateDataUnit(layerId: number, message: string, scenario: string, di
       envelope: 'SSL/TLS'
     },
     5: {
-      sdu: `[UTF-8][ZIP][AES-256] Host: example.com | User-Agent: Mozilla/5.0 | Content-Type: text/html | Body: ${message}`,
-      pdu: `[Session ID: 12345][Keep-Alive: 300s] [UTF-8][ZIP][AES-256] Host: example.com | User-Agent: Mozilla/5.0 | Content-Type: text/html | Body: ${message}`,
+      sdu: `[UTF-8][ZIP][AES-256] HTTP Request: ${message}`,
+      pdu: `[Session] [UTF-8][ZIP][AES-256] HTTP Request: ${message}`,
       campos: [
         'Session ID: Identificador único da sessão ativa',
         'Keep-Alive: Tempo para manter conexão aberta'
@@ -136,8 +136,8 @@ function generateDataUnit(layerId: number, message: string, scenario: string, di
       envelope: 'Session'
     },
     4: {
-      sdu: `[Session ID: 12345][Keep-Alive: 300s] [UTF-8][ZIP][AES-256] Host: example.com | User-Agent: Mozilla/5.0 | Content-Type: text/html | Body: ${message}`,
-      pdu: `[Src Port: 5050][Dst Port: 443][Seq: 001][ACK: 0] [Session ID: 12345][Keep-Alive: 300s] [UTF-8][ZIP][AES-256] Host: example.com | User-Agent: Mozilla/5.0 | Content-Type: text/html | Body: ${message}`,
+      sdu: `[Session] [UTF-8][ZIP][AES-256] HTTP Request: ${message}`,
+      pdu: `[TCP] [Session] [UTF-8][ZIP][AES-256] HTTP Request: ${message}`,
       campos: [
         'Porta de Origem: Porta do seu computador (5050)',
         'Porta de Destino: Porta do servidor (443 - HTTPS)',
@@ -147,8 +147,8 @@ function generateDataUnit(layerId: number, message: string, scenario: string, di
       envelope: 'TCP'
     },
     3: {
-      sdu: `[Src Port: 5050][Dst Port: 443][Seq: 001][ACK: 0] [Session ID: 12345][Keep-Alive: 300s] [UTF-8][ZIP][AES-256] Host: example.com | User-Agent: Mozilla/5.0 | Content-Type: text/html | Body: ${message}`,
-      pdu: `[Src IP: 192.168.1.100][Dst IP: 8.8.8.8][TTL: 64] [Src Port: 5050][Dst Port: 443][Seq: 001][ACK: 0] [Session ID: 12345][Keep-Alive: 300s] [UTF-8][ZIP][AES-256] Host: example.com | User-Agent: Mozilla/5.0 | Content-Type: text/html | Body: ${message}`,
+      sdu: `[TCP] [Session] [UTF-8][ZIP][AES-256] HTTP Request: ${message}`,
+      pdu: `[IP] [TCP] [Session] [UTF-8][ZIP][AES-256] HTTP Request: ${message}`,
       campos: [
         'IP de Origem: Endereço do seu computador (192.168.1.100)',
         'IP de Destino: Endereço do servidor Google (8.8.8.8)',
@@ -157,8 +157,8 @@ function generateDataUnit(layerId: number, message: string, scenario: string, di
       envelope: 'IP'
     },
     2: {
-      sdu: `[Src IP: 192.168.1.100][Dst IP: 8.8.8.8][TTL: 64] [Src Port: 5050][Dst Port: 443][Seq: 001][ACK: 0] [Session ID: 12345][Keep-Alive: 300s] [UTF-8][ZIP][AES-256] Host: example.com | User-Agent: Mozilla/5.0 | Content-Type: text/html | Body: ${message}`,
-      pdu: `[Src MAC: AA:BB:CC:DD:EE:FF][Dst MAC: 11:22:33:44:55:66] [Src IP: 192.168.1.100][Dst IP: 8.8.8.8][TTL: 64] [Src Port: 5050][Dst Port: 443][Seq: 001][ACK: 0] [Session ID: 12345][Keep-Alive: 300s] [UTF-8][ZIP][AES-256] Host: example.com | User-Agent: Mozilla/5.0 | Content-Type: text/html | Body: ${message}`,
+      sdu: `[IP] [TCP] [Session] [UTF-8][ZIP][AES-256] HTTP Request: ${message}`,
+      pdu: `[Ethernet] [IP] [TCP] [Session] [UTF-8][ZIP][AES-256] HTTP Request: ${message}`,
       campos: [
         'MAC de Origem: Endereço físico da sua placa de rede',
         'MAC de Destino: Endereço físico do roteador/switch'
@@ -166,8 +166,8 @@ function generateDataUnit(layerId: number, message: string, scenario: string, di
       envelope: 'Ethernet'
     },
     1: {
-      sdu: `[Src MAC: AA:BB:CC:DD:EE:FF][Dst MAC: 11:22:33:44:55:66] [Src IP: 192.168.1.100][Dst IP: 8.8.8.8][TTL: 64] [Src Port: 5050][Dst Port: 443][Seq: 001][ACK: 0] [Session ID: 12345][Keep-Alive: 300s] [UTF-8][ZIP][AES-256] Host: example.com | User-Agent: Mozilla/5.0 | Content-Type: text/html | Body: ${message}`,
-      pdu: `10110101011010101... (Frequency: 2.4GHz | Signal: +/-5V | Bits/sec: 1Gbps)`,
+      sdu: `[Ethernet] [IP] [TCP] [Session] [UTF-8][ZIP][AES-256] HTTP Request: ${message}`,
+      pdu: `10110101011010101... (Sinais Elétricos)`,
       campos: [
         'Frequência: Velocidade de transmissão (2.4GHz)',
         'Voltagem: Sinais elétricos (+/-5V) para bits 0 e 1',
