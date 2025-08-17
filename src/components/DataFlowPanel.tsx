@@ -105,15 +105,6 @@ const DataFlowPanel = ({ currentStep, layer }: DataFlowPanelProps) => {
           </>
         )}
 
-        {/* Direction Indicator */}
-        <div className="flex items-center justify-center pt-4">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <span>Direção:</span>
-            <Badge variant={isEncapsulating ? "default" : "secondary"}>
-              {isEncapsulating ? 'Origem → Destino' : '📥 Destino ← Origem'}
-            </Badge>
-          </div>
-        </div>
       </CardContent>
     </Card>
   );
