@@ -109,7 +109,7 @@ const LayerVisualization = ({ currentStep, layer }: LayerVisualizationProps) => 
           {/* Visual Flow Arrow */}
           <div className="flex items-center justify-center">
             <div className={`flow-arrow ${isAnimating ? 'animate-pulse-glow' : ''}`}>
-              {isEncapsulating ? '⬇️' : '⬆️'}
+              {isEncapsulating ? '' : '⬆️'}
             </div>
           </div>
         </div>
